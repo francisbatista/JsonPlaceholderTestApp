@@ -9,9 +9,10 @@ import SwiftUI
 
 struct JsonPlaceholderView: View {
     @ObservedObject var viewModel = JsonPlaceholderViewModel()
+    var appTitle: String = "JsonPlaceholder App"
     var body: some View {
         VStack {
-            Text("JsonPlaceholder App")
+            Text(viewModel.withCompletion ? "\(appTitle) WithCompletion" : appTitle)
                 .font(.headline)
             HStack {
                 Text("id")
@@ -20,12 +21,16 @@ struct JsonPlaceholderView: View {
                     .padding()
                     .border(.gray)
             }
+            Toggle("WithCompletion", isOn: $viewModel.withCompletion)
+                .padding()
             Spacer()
             if let reponseData = viewModel.dataResponse {
                 HStack {
                     Text("Title:")
                     Text(reponseData.title ?? "")
                 }
+                Text("Time: \(viewModel.time)")
+                    .padding()
             }
             Spacer()
             if !viewModel.errorMessage.isEmpty {
@@ -38,7 +43,7 @@ struct JsonPlaceholderView: View {
                     
             }
             Button {
-                viewModel.fetchData()
+                viewModel.fetch()
             } label: {
                 Text("Fetch Data")
             }

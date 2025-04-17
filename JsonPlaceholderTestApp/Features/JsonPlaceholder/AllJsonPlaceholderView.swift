@@ -15,7 +15,7 @@ struct AllJsonPlaceholderView: View {
                 ProgressView()
                     .scaleEffect(2)
             } else if let data = viewModel.allDataResponse, !data.isEmpty, viewModel.errorMessage.isEmpty {
-                Text("All Data")
+                Text("All Data In \(viewModel.time) Seconds")
                     .font(.headline)
                     .padding()
                 ScrollView {
@@ -51,7 +51,7 @@ struct AllJsonPlaceholderView: View {
         .padding()
         .onAppear {
             viewModel.clearVariables()
-            viewModel.fetchAllData()
+            viewModel.fetchAll()
         }
     }
 }
